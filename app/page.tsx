@@ -1,9 +1,5 @@
-import Image from "next/image";
+import Onboarding from "./onboarding/page";
 
 export default function Home() {
-  return (
-    <h1>
-      Home
-    </h1>
-  );
+  return <div className="flex h-screen max-h-screen w-screen"></div>;
 }
