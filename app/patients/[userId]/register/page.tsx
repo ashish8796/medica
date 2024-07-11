@@ -9,7 +9,7 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[496px]">
+        <div className="sub-container max-w-[860px]">
           <Logo w="w-[32px]" h="h-[32px]" />
         </div>
 

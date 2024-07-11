@@ -1,6 +1,6 @@
 "use client";
 
-import { onboardingSchema } from "@/lib/validation";
+import { UserFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,8 +25,8 @@ const OnboardingForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof onboardingSchema>>({
-    resolver: zodResolver(onboardingSchema),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: "",
       email: "",
@@ -38,7 +38,7 @@ const OnboardingForm = () => {
     name,
     email,
     phone,
-  }: z.infer<typeof onboardingSchema>) {
+  }: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
 
     try {
