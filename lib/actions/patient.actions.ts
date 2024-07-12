@@ -1,3 +1,5 @@
+"use server";
+
 import { ID, Query } from "node-appwrite";
 import {
   BUCKET_ID,
@@ -12,6 +14,7 @@ import {
 import { parseStringify } from "../utils";
 
 import { InputFile } from "node-appwrite/file";
+import { Patient } from "@/types/appwrite";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -37,6 +40,26 @@ export const getUser = async (userId: string) => {
     return parseStringify(user);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getPatient = async (userId: string): Promise<Patient | null> => {
+  try {
+    const patientDocuments = await databases.listDocuments(
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+
+    return patientDocuments.documents.length > 0
+      ? parseStringify(patientDocuments.documents[0])
+      : null;
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the patient details:",
+      error
+    );
+    return null;
   }
 };
 
