@@ -3,8 +3,9 @@ import Image from "next/image";
 import Logo from "@/components/Logo";
 import OnboardingForm from "@/components/forms/OnboardingForm";
 import PaaskeyModal from "@/components/PaaskeyModal";
+import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 
-const Onboarding = ({ searchParams }: SearchParamProps) => {
+const Onboarding = async ({ searchParams }: SearchParamProps) => {
   const isAdmin = searchParams?.admin === "true";
 
   return (
