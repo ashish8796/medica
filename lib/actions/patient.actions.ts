@@ -1,5 +1,14 @@
 import { ID, Query } from "node-appwrite";
-import { storage, users } from "../appwrite.config";
+import {
+  BUCKET_ID,
+  DATABASE_ID,
+  ENDPOINT,
+  PATIENT_COLLECTION_ID,
+  PROJECT_ID,
+  databases,
+  storage,
+  users,
+} from "../appwrite.config";
 import { parseStringify } from "../utils";
 
 import { InputFile } from "node-appwrite/file";
@@ -45,6 +54,18 @@ export const registerPatient = async ({
       );
 
       file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
+
+      const newPatient = await databases.createDocument(
+        DATABASE_ID!,
+        PATIENT_COLLECTION_ID!,
+        ID.unique(),
+        {
+          identificationDocument: file?.$id || null,
+          identificationDocumentUrl: `${ENDPOINT}/storage/bucket/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
+        }
+      );
+
+      return parseStringify(newPatient);
     }
   } catch (error) {
     console.log(error);
