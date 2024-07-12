@@ -10,7 +10,7 @@ import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { registerPatient } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
-import { FormFieldType } from "./OnboardingForm";
+import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import {
   Doctors,
@@ -36,6 +36,8 @@ const RegisterForm = ({ user }: { user: User }) => {
       phone: user?.phone,
     },
   });
+
+  console.log({ Doctors });
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
@@ -96,6 +98,11 @@ const RegisterForm = ({ user }: { user: User }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <section className="space-y-3 pt-14">
+          <h1 className="header">Welcome</h1>
+          <p className="text-dark-700">Let us know more about yourself.</p>
+        </section>
+
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
             <h2 className="sub-header">Personal Information</h2>
@@ -203,27 +210,31 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
+        {/* PRIMARY CARE PHYSICIAN */}
         <CustomFormField
           control={form.control}
           fieldType={FormFieldType.SELECT}
           name="primaryPhysician"
-          label="Primary Physician"
+          label="Primary care Physician"
           placeholder="Select a physician"
         >
-          {Doctors.map((doctor) => (
-            <SelectItem key={doctor.name} value={doctor.name}>
-              <div className="flex cursor-pointer items-center gap-2">
-                <Image
-                  src={doctor.image}
-                  alt={doctor.name}
-                  height={32}
-                  width={32}
-                  className="rounded-full border border-dark-500"
-                />
-                <p>{doctor.name}</p>
-              </div>
-            </SelectItem>
-          ))}
+          {Doctors.map((doctor, i) => {
+            console.log({ doctor });
+            return (
+              <SelectItem key={doctor.name + i} value={doctor.name}>
+                <div className="flex cursor-pointer items-center gap-2">
+                  <Image
+                    src={doctor.image}
+                    alt={doctor.name}
+                    height={32}
+                    width={32}
+                    className="rounded-full border border-dark-500"
+                  />
+                  <p>{doctor.name}</p>
+                </div>
+              </SelectItem>
+            );
+          })}
         </CustomFormField>
 
         <div className="flex flex-col gap-6 xl:flex-row">

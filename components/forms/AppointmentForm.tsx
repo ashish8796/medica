@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "../ui/form";
 import CustomFormField from "../CustomFormField";
-import { FormFieldType } from "./OnboardingForm";
+import { FormFieldType } from "./PatientForm";
 import SubmitButton from "../SubmitButton";
 import { Doctors } from "@/constants";
 import { SelectItem } from "@radix-ui/react-select";

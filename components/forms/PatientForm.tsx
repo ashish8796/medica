@@ -44,14 +44,21 @@ const OnboardingForm = () => {
     try {
       const userData = { name, email, phone };
       const user = await createUser(userData);
-
+      
       if (user) router.push(`/patients/${user.$id}/register`);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <section className="space-y-3">
+          <h1 className="header">Hi there 👋</h1>
+          <p className="text-dark-700">Get Started with Appointments.</p>
+        </section>
+
         <CustomFormField
           control={form.control}
           fieldType={FormFieldType.INPUT}

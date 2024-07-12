@@ -24,7 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { decryptKey, encryptKey } from "@/lib/utils";
 
 const PaaskeyModal = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
   const path = usePathname();
@@ -58,7 +58,7 @@ const PaaskeyModal = () => {
 
   useEffect(() => {
     const accessKey = encryptedKey && decryptKey(encryptedKey);
-    
+
     if (path) {
       if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
         setOpen(false);

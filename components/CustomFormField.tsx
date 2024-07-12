@@ -5,14 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import PhoneInput from "react-phone-number-input";
-import { FormFieldType } from "./forms/OnboardingForm";
+import { FormFieldType } from "./forms/PatientForm";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { E164Number } from "libphonenumber-js/core";
@@ -169,7 +167,7 @@ const CustomFormField = (props: CustomProps) => {
   return (
     <FormField
       control={control}
-      name="name"
+      name={name}
       render={({ field }) => (
         <FormItem>
           {fieldType !== FormFieldType.CHECKBOX && label && (
