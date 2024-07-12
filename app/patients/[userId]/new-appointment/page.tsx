@@ -6,6 +6,7 @@ import React from "react";
 
 const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId);
+  const type = "create";
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -14,12 +15,14 @@ const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
           <Logo w="w-[32px]" h="h-[32px]" />
         </div>
 
-        <div className="space-y-4 pt-8">
-          <h1 className="header">New Appointment</h1>
-          <p className="text-dark-700">
-            Request a new appointment in 10 seconds
-          </p>
-        </div>
+        {type == "create" && (
+          <div className="space-y-4 pt-8">
+            <h1 className="header">New Appointment</h1>
+            <p className="text-dark-700">
+              Request a new appointment in 10 seconds
+            </p>
+          </div>
+        )}
 
         <AppointmentForm
           type="create"
