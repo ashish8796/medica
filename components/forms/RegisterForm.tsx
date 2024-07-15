@@ -2,7 +2,7 @@
 
 import { PatientFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
@@ -19,9 +19,9 @@ import {
   PatientFormDefaultValues,
 } from "@/constants";
 import { Label } from "../ui/label";
-import { SelectItem } from "@radix-ui/react-select";
 import Image from "next/image";
 import FileUpload from "../FileUpload";
+import { SelectItem } from "../ui/select";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,16 +37,15 @@ const RegisterForm = ({ user }: { user: User }) => {
     },
   });
 
-  console.log({ Doctors });
-
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+    console.log("IM HERE", values);
     setIsLoading(true);
 
     // Store file info in form data as
     let formData;
     if (
       values.identificationDocument &&
-      values.identificationDocument.length > 0
+      values.identificationDocument?.length > 0
     ) {
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
@@ -84,6 +83,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       };
 
       const newPatient = await registerPatient(patient);
+      console.log({ newPatient });
 
       if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
@@ -94,6 +94,8 @@ const RegisterForm = ({ user }: { user: User }) => {
 
     setIsLoading(false);
   }
+
+  console.log(form.formState);
 
   return (
     <Form {...form}>
@@ -192,7 +194,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="emergencyContactName"
-            label="Emergency contact Name"
+            label="Emergency contact name"
             placeholder="Guardian's name"
           />
           <CustomFormField
@@ -219,7 +221,6 @@ const RegisterForm = ({ user }: { user: User }) => {
           placeholder="Select a physician"
         >
           {Doctors.map((doctor, i) => {
-            console.log({ doctor });
             return (
               <SelectItem key={doctor.name + i} value={doctor.name}>
                 <div className="flex cursor-pointer items-center gap-2">
@@ -320,7 +321,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SKELETON}
-            name="identificationDocuments"
+            name="identificationDocument"
             label="Scanned copy of identification document"
             renderSkeleton={(field) => (
               <FormControl>
