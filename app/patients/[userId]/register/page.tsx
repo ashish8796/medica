@@ -12,17 +12,11 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
 
   return (
     <div className="flex h-screen max-h-screen">
-      <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px]">
+      <section className="border remove-scrollbar container">
+        <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
           <Logo w="w-[32px]" h="h-[32px]" />
+          <RegisterForm user={user} />
         </div>
-
-        <div className="space-y-4 pt-8">
-          <h1 className="header">Welcome</h1>
-          <p className="text-dark-700">Let us know more about yourself.</p>
-        </div>
-
-        <RegisterForm user={user} />
       </section>
 
       <Image

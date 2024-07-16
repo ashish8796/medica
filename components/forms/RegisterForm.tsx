@@ -10,7 +10,7 @@ import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { registerPatient } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
-import { FormFieldType } from "./OnboardingForm";
+import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import {
   Doctors,
@@ -19,9 +19,9 @@ import {
   PatientFormDefaultValues,
 } from "@/constants";
 import { Label } from "../ui/label";
-import { SelectItem } from "@radix-ui/react-select";
 import Image from "next/image";
 import FileUpload from "../FileUpload";
+import { SelectItem } from "../ui/select";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +44,7 @@ const RegisterForm = ({ user }: { user: User }) => {
     let formData;
     if (
       values.identificationDocument &&
-      values.identificationDocument.length > 0
+      values.identificationDocument?.length > 0
     ) {
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
@@ -82,7 +82,6 @@ const RegisterForm = ({ user }: { user: User }) => {
       };
 
       const newPatient = await registerPatient(patient);
-
       if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
       }
@@ -96,6 +95,11 @@ const RegisterForm = ({ user }: { user: User }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <section className="space-y-3 pt-14">
+          <h1 className="header">Welcome</h1>
+          <p className="text-dark-700">Let us know more about yourself.</p>
+        </section>
+
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
             <h2 className="sub-header">Personal Information</h2>
@@ -185,7 +189,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="emergencyContactName"
-            label="Emergency contact Name"
+            label="Emergency contact name"
             placeholder="Guardian's name"
           />
           <CustomFormField
@@ -203,27 +207,30 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
+        {/* PRIMARY CARE PHYSICIAN */}
         <CustomFormField
           control={form.control}
           fieldType={FormFieldType.SELECT}
           name="primaryPhysician"
-          label="Primary Physician"
+          label="Primary care Physician"
           placeholder="Select a physician"
         >
-          {Doctors.map((doctor) => (
-            <SelectItem key={doctor.name} value={doctor.name}>
-              <div className="flex cursor-pointer items-center gap-2">
-                <Image
-                  src={doctor.image}
-                  alt={doctor.name}
-                  height={32}
-                  width={32}
-                  className="rounded-full border border-dark-500"
-                />
-                <p>{doctor.name}</p>
-              </div>
-            </SelectItem>
-          ))}
+          {Doctors.map((doctor, i) => {
+            return (
+              <SelectItem key={doctor.name + i} value={doctor.name}>
+                <div className="flex cursor-pointer items-center gap-2">
+                  <Image
+                    src={doctor.image}
+                    alt={doctor.name}
+                    height={32}
+                    width={32}
+                    className="rounded-full border border-dark-500"
+                  />
+                  <p>{doctor.name}</p>
+                </div>
+              </SelectItem>
+            );
+          })}
         </CustomFormField>
 
         <div className="flex flex-col gap-6 xl:flex-row">
@@ -309,7 +316,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           <CustomFormField
             control={form.control}
             fieldType={FormFieldType.SKELETON}
-            name="identificationDocuments"
+            name="identificationDocument"
             label="Scanned copy of identification document"
             renderSkeleton={(field) => (
               <FormControl>

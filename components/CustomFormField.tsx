@@ -5,19 +5,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import PhoneInput from "react-phone-number-input";
-import { FormFieldType } from "./forms/OnboardingForm";
+import { FormFieldType } from "./forms/PatientForm";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { E164Number } from "libphonenumber-js/core";
-import { Select, SelectTrigger } from "./ui/select";
-import { SelectContent, SelectValue } from "@radix-ui/react-select";
+import { Select, SelectTrigger, SelectContent, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
@@ -47,6 +44,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     dateFormat,
     renderSkeleton,
   } = props;
+
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -130,7 +128,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <FormControl>
           <Textarea
-            className="shad-textarea"
+            className="shad-textArea"
             disabled={props.disabled}
             placeholder={placeholder}
             {...field}
@@ -169,7 +167,7 @@ const CustomFormField = (props: CustomProps) => {
   return (
     <FormField
       control={control}
-      name="name"
+      name={name}
       render={({ field }) => (
         <FormItem>
           {fieldType !== FormFieldType.CHECKBOX && label && (

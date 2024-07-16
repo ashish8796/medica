@@ -3,15 +3,10 @@
 import { ID, Query } from "node-appwrite";
 import {
   APPOINTMENT_COLLECTION_ID,
-  BUCKET_ID,
   DATABASE_ID,
-  ENDPOINT,
-  PATIENT_COLLECTION_ID,
   PROJECT_ID,
   databases,
   messaging,
-  storage,
-  users,
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite";
@@ -24,14 +19,15 @@ export const createAppointment = async (
   try {
     const newAppointment = await databases.createDocument(
       DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
+      APPOINTMENT_COLLECTION_ID!,
       ID.unique(),
       appointment
     );
 
     return parseStringify(newAppointment);
   } catch (error) {
-    console.log(error);
+    console.error("An error occurred while creating the appointment:", error);
+    return null;
   }
 };
 
@@ -46,11 +42,18 @@ export const getAppointment = async (
     );
 
     return parseStringify(appointmentDocument);
-  } catch (error) {
+  } catch (error: any) {
     console.error(
       "An error occurred while retrieving the appointment details:",
       error
     );
+    if (error && error?.code && error?.code === 400) {
+      return parseStringify({
+        message: error.response.message,
+        status: error.code,
+      });
+    }
+
     return null;
   }
 };
@@ -58,8 +61,8 @@ export const getAppointment = async (
 export const getRecentAppointmentList = async () => {
   try {
     const appointments = await databases.listDocuments(
-      DATABASE_ID!,
-      APPOINTMENT_COLLECTION_ID!,
+      DATABASE_ID as string,
+      APPOINTMENT_COLLECTION_ID as string,
       [Query.orderDesc("$createdAt")]
     );
 
@@ -90,7 +93,12 @@ export const getRecentAppointmentList = async () => {
     };
 
     return parseStringify(data);
-  } catch (error) {}
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the appointments:",
+      error
+    );
+  }
 };
 
 export const updateAppointment = async ({
@@ -127,12 +135,11 @@ export const updateAppointment = async ({
     revalidatePath("/admin");
 
     return parseStringify(updatedAppointment);
-  } catch (error) {
+  } catch (error: any) {
     console.error(
       "An error occurred while retrieving the appointment details:",
       error
     );
-    return null;
   }
 };
 

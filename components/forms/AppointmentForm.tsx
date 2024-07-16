@@ -3,21 +3,21 @@
 import { getAppointmentSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "../ui/form";
 import CustomFormField from "../CustomFormField";
-import { FormFieldType } from "./OnboardingForm";
+import { FormFieldType } from "./PatientForm";
 import SubmitButton from "../SubmitButton";
 import { Doctors } from "@/constants";
-import { SelectItem } from "@radix-ui/react-select";
 import Image from "next/image";
 import {
   createAppointment,
   updateAppointment,
 } from "@/lib/actions/appointment.actions";
 import { Appointment } from "@/types/appwrite";
+import { SelectItem } from "../ui/select";
 
 const AppointmentForm = ({
   userId,
@@ -75,7 +75,7 @@ const AppointmentForm = ({
           patient: patientId,
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
-          reason: values.reason!,
+          reason: values.reason as string,
           note: values.note,
           status: status as Status,
         };
@@ -91,7 +91,7 @@ const AppointmentForm = ({
       } else {
         const appointmentToUpdate = {
           userId,
-          appointmentId: appointment?.$id,
+          appointmentId: appointment?.$id as string,
           appointment: {
             primaryPhysician: values.primaryPhysician,
             schedule: new Date(values.schedule),
@@ -126,9 +126,24 @@ const AppointmentForm = ({
       break;
   }
 
+  useEffect(() => {
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {type == "create" && (
+          <div className="space-y-4 pt-14">
+            <h1 className="header">New Appointment</h1>
+            <p className="text-dark-700">
+              Request a new appointment in 10 seconds
+            </p>
+          </div>
+        )}
+
         {type !== "cancel" && (
           <>
             <CustomFormField
@@ -138,8 +153,8 @@ const AppointmentForm = ({
               label="Doctor"
               placeholder="Select a doctor"
             >
-              {Doctors.map((doctor) => (
-                <SelectItem key={doctor.name} value={doctor.name}>
+              {Doctors.map((doctor, i) => (
+                <SelectItem key={doctor.name + i} value={doctor.name}>
                   <div className="flex cursor-pointer items-center gap-2">
                     <Image
                       src={doctor.image}
@@ -163,22 +178,29 @@ const AppointmentForm = ({
               dateFormat="MM/dd/yyyy - h:mm aa"
             />
 
-            <div className="flex flex-col gap-6 xl:flex-row">
-              <CustomFormField
-                fieldType={FormFieldType.TEXTAREA}
-                control={form.control}
-                name="reason"
-                label="Reason for appointment"
-                placeholder="Enter reason for appointment"
-              />
-
-              <CustomFormField
-                fieldType={FormFieldType.TEXTAREA}
-                control={form.control}
-                name="note"
-                label="Notes"
-                placeholder="Enter notes"
-              />
+            <div
+              className={`flex flex-col gap-6 flex-1  ${
+                type === "create" && "xl:flex-row"
+              }`}
+            >
+              <div className="flex-1">
+                <CustomFormField
+                  fieldType={FormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="reason"
+                  label="Reason for appointment"
+                  placeholder="Enter reason for appointment"
+                />
+              </div>
+              <div className="flex-1">
+                <CustomFormField
+                  fieldType={FormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="note"
+                  label="Notes"
+                  placeholder="Enter notes"
+                />
+              </div>
             </div>
           </>
         )}
