@@ -61,8 +61,8 @@ export const getAppointment = async (
 export const getRecentAppointmentList = async () => {
   try {
     const appointments = await databases.listDocuments(
-      DATABASE_ID!,
-      APPOINTMENT_COLLECTION_ID!,
+      DATABASE_ID as string,
+      APPOINTMENT_COLLECTION_ID as string,
       [Query.orderDesc("$createdAt")]
     );
 
@@ -93,7 +93,12 @@ export const getRecentAppointmentList = async () => {
     };
 
     return parseStringify(data);
-  } catch (error) {}
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the appointments:",
+      error
+    );
+  }
 };
 
 export const updateAppointment = async ({

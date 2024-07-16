@@ -13,7 +13,7 @@ const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
-        <div className="border sub-container max-w-[860px] flex-1 flex-col py-10">
+        <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
           <Logo w="w-[32px]" h="h-[32px]" />
 
           <AppointmentForm

@@ -27,7 +27,7 @@ const SuccessAppointment = async ({
     <div className="flex flex-col h-screen max-h-screen px-[5%]">
       <section className="container">
         <div className="sub-container max-w-[860px]">
-          <Link href="/" className="mx-auto">
+          <Link href="/patients" className="mx-auto">
             <Logo w="w-[32px]" h="h-[32px]" />
           </Link>
 
@@ -73,7 +73,11 @@ const SuccessAppointment = async ({
             </div>
           </section>
 
-          <Button variant={"outline"} className="shad-primary-btn mt-12 w-fit mx-auto" asChild>
+          <Button
+            variant={"outline"}
+            className="shad-primary-btn mt-12 w-fit mx-auto"
+            asChild
+          >
             <Link href={`/patients/${userId}/new-appointment`}>
               New Appointment
             </Link>

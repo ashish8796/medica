@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/patient");
+    router.push("/patients");
   }, []);
 
   return <div className="flex h-screen max-h-screen w-screen"></div>;

@@ -3,7 +3,7 @@
 import { getAppointmentSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "../ui/form";
@@ -51,7 +51,6 @@ const AppointmentForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
-    console.log("I am here");
     setIsLoading(true);
 
     let status;
@@ -83,8 +82,6 @@ const AppointmentForm = ({
 
         const appointment = await createAppointment(appointmentData);
 
-        console.log({ appointment });
-
         if (appointment) {
           form.reset();
           router.push(
@@ -111,10 +108,7 @@ const AppointmentForm = ({
           form.reset();
         }
       }
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
+    } catch (error) {}
   }
 
   let btnLabel;
@@ -132,7 +126,11 @@ const AppointmentForm = ({
       break;
   }
 
-  console.log("Errors: ", form.formState.errors);
+  useEffect(() => {
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
 
   return (
     <Form {...form}>
