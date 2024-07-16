@@ -24,64 +24,66 @@ const SuccessAppointment = async ({
   Sentry.metrics.set("user_view_new_appointment", user?.name as string);
 
   return (
-    <div className="flex h-screen max-h-screen px-[5%]">
-      <section className="remove-scrollbar container">
+    <div className="flex flex-col h-screen max-h-screen px-[5%]">
+      <section className="container">
         <div className="sub-container max-w-[860px]">
-          <Link href="/">
+          <Link href="/" className="mx-auto">
             <Logo w="w-[32px]" h="h-[32px]" />
           </Link>
+
+          <section className="flex flex-col items-center pt-14 space-y-4">
+            <Image
+              src="/assets/gifs/success.gif"
+              alt="success"
+              width={300}
+              height={280}
+            />
+
+            <h2 className="header mb-6 max-w-[600px] text-center">
+              Your <span className="text-green-500">appointment request</span>{" "}
+              has been successfully submitted!
+            </h2>
+
+            <p>We will be in touch shortly to confirm.</p>
+          </section>
+
+          <section className="request-details mx-auto mt-8">
+            <p>Requested appointment details:</p>
+
+            <div className="flex items-center gap-3">
+              <Image
+                src={doctor?.image as string}
+                alt="doctor"
+                height={100}
+                width={100}
+              />
+
+              <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <Image
+                src="/assets/icons/calendar.svg"
+                alt="calendar"
+                width={24}
+                height={24}
+              />
+
+              <p>{formatDateTime(appointment?.schedule as Date).dateTime}</p>
+            </div>
+          </section>
+
+          <Button variant={"outline"} className="shad-primary-btn mt-12 w-fit mx-auto" asChild>
+            <Link href={`/patients/${userId}/new-appointment`}>
+              New Appointment
+            </Link>
+          </Button>
+
+          <p className="copyright pt-14 mx-auto">
+            Copyright © 2022. All rights reserved.
+          </p>
         </div>
       </section>
-
-      <section className="flex flex-col items-center">
-        <Image
-          src="/assets/gifs/success.gif"
-          alt="success"
-          width={300}
-          height={280}
-        />
-
-        <h2 className="header mb-6 max-w-[600px] text-center">
-          Your <span className="text-green-500">appointment request</span> has
-          been successfully submitted!
-        </h2>
-
-        <p>We will be in touch shortly to confirm.</p>
-      </section>
-
-      <section className="request-details">
-        <p>Requested appointment details:</p>
-
-        <div className="flex items-center gap-3">
-          <Image
-            src={doctor?.image as string}
-            alt="doctor"
-            height={100}
-            width={100}
-          />
-
-          <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
-        </div>
-
-        <div className="flex gap-2">
-          <Image
-            src="/assets/icons/calendar.svg"
-            alt="calendar"
-            width={24}
-            height={24}
-          />
-
-          <p>{formatDateTime(appointment?.schedule as Date).dateTime}</p>
-        </div>
-      </section>
-
-      <Button variant={"outline"} className="shad-primary-btn" asChild>
-        <Link href={`/patients/${userId}/new-appointment`}>
-          New Appointment
-        </Link>
-      </Button>
-
-      <p className="copyright">Copyright © 2022. All rights reserved.</p>
     </div>
   );
 };

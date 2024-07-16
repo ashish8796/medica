@@ -3,15 +3,10 @@
 import { ID, Query } from "node-appwrite";
 import {
   APPOINTMENT_COLLECTION_ID,
-  BUCKET_ID,
   DATABASE_ID,
-  ENDPOINT,
-  PATIENT_COLLECTION_ID,
   PROJECT_ID,
   databases,
   messaging,
-  storage,
-  users,
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite";
@@ -24,12 +19,10 @@ export const createAppointment = async (
   try {
     const newAppointment = await databases.createDocument(
       DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
+      APPOINTMENT_COLLECTION_ID!,
       ID.unique(),
       appointment
     );
-
-    console.log({ newAppointment });
 
     return parseStringify(newAppointment);
   } catch (error) {
@@ -49,11 +42,18 @@ export const getAppointment = async (
     );
 
     return parseStringify(appointmentDocument);
-  } catch (error) {
+  } catch (error: any) {
     console.error(
       "An error occurred while retrieving the appointment details:",
       error
     );
+    if (error && error?.code && error?.code === 400) {
+      return parseStringify({
+        message: error.response.message,
+        status: error.code,
+      });
+    }
+
     return null;
   }
 };
@@ -135,15 +135,6 @@ export const updateAppointment = async ({
       "An error occurred while retrieving the appointment details:",
       error
     );
-
-    if (error && error?.code && error?.code === 400) {
-      return parseStringify({
-        message: error.response.message,
-        status: error.code,
-      });
-    }
-
-    return null;
   }
 };
 

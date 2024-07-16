@@ -85,12 +85,12 @@ const AppointmentForm = ({
 
         console.log({ appointment });
 
-        // if (appointment) {
-        //   form.reset();
-        //   router.push(
-        //     `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
-        //   );
-        // }
+        if (appointment) {
+          form.reset();
+          router.push(
+            `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
+          );
+        }
       } else {
         const appointmentToUpdate = {
           userId,
@@ -111,9 +111,8 @@ const AppointmentForm = ({
           form.reset();
         }
       }
-
-      setIsLoading(false);
     } catch (error) {
+    } finally {
       setIsLoading(false);
     }
   }
