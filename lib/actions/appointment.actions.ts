@@ -29,9 +29,12 @@ export const createAppointment = async (
       appointment
     );
 
+    console.log({ newAppointment });
+
     return parseStringify(newAppointment);
   } catch (error) {
-    console.log(error);
+    console.error("An error occurred while creating the appointment:", error);
+    return null;
   }
 };
 
@@ -127,11 +130,19 @@ export const updateAppointment = async ({
     revalidatePath("/admin");
 
     return parseStringify(updatedAppointment);
-  } catch (error) {
+  } catch (error: any) {
     console.error(
       "An error occurred while retrieving the appointment details:",
       error
     );
+
+    if (error && error?.code && error?.code === 400) {
+      return parseStringify({
+        message: error.response.message,
+        status: error.code,
+      });
+    }
+
     return null;
   }
 };

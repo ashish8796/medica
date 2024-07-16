@@ -2,7 +2,7 @@
 
 import { PatientFormValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
@@ -38,7 +38,6 @@ const RegisterForm = ({ user }: { user: User }) => {
   });
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
-    console.log("IM HERE", values);
     setIsLoading(true);
 
     // Store file info in form data as
@@ -83,8 +82,6 @@ const RegisterForm = ({ user }: { user: User }) => {
       };
 
       const newPatient = await registerPatient(patient);
-      console.log({ newPatient });
-
       if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
       }
@@ -94,8 +91,6 @@ const RegisterForm = ({ user }: { user: User }) => {
 
     setIsLoading(false);
   }
-
-  console.log(form.formState);
 
   return (
     <Form {...form}>

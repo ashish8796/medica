@@ -7,31 +7,21 @@ import * as Sentry from "@sentry/nextjs";
 
 const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId);
-  const type = "create";
 
   Sentry.metrics.set("patient_view_new_appointment", patient?.name as string);
 
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px]">
+        <div className="border sub-container max-w-[860px] flex-1 flex-col py-10">
           <Logo w="w-[32px]" h="h-[32px]" />
+
+          <AppointmentForm
+            type="create"
+            userId={userId}
+            patientId={patient?.$id as string}
+          />
         </div>
-
-        {type == "create" && (
-          <div className="space-y-4 pt-8">
-            <h1 className="header">New Appointment</h1>
-            <p className="text-dark-700">
-              Request a new appointment in 10 seconds
-            </p>
-          </div>
-        )}
-
-        <AppointmentForm
-          type="create"
-          userId={userId}
-          patientId={patient?.id}
-        />
       </section>
 
       <Image
