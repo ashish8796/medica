@@ -13,6 +13,8 @@ const fontSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Medica",
   description: "A health care app",
+  applicationName: "Medica",
+  authors: [{ name: "Ashish Kumar Saini" }],
 };
 
 export default function RootLayout({
@@ -22,6 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-dark-300 font-sans antialiased",
