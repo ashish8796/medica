@@ -12,6 +12,7 @@ import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite";
 import { revalidatePath } from "next/cache";
 import { formatDateTime } from "./../utils";
+import { cookies } from "next/headers";
 
 export const createAppointment = async (
   appointment: CreateAppointmentParams
@@ -60,6 +61,9 @@ export const getAppointment = async (
 
 export const getRecentAppointmentList = async () => {
   try {
+    // disable cache for this server action
+    const _cookies = cookies();
+
     const appointments = await databases.listDocuments(
       DATABASE_ID as string,
       APPOINTMENT_COLLECTION_ID as string,
