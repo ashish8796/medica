@@ -183,7 +183,7 @@
 
   /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
-    @apply bg-green-500 text-white !important;
+    @apply bg-green-500 w-fit sm:w-full mx-auto text-white !important;
   }
 
   .shad-danger-btn {
@@ -251,11 +251,11 @@
   }
 
   .shad-otp {
-    @apply w-full flex justify-between !important;
+    @apply gap-2 sm:gap-3 mx-auto sm:w-full flex justify-between !important;
   }
 
   .shad-otp-slot {
-    @apply text-36-bold justify-center flex border border-dark-500 rounded-lg size-16 gap-4 !important;
+    @apply text-24-bold sm:text-36-bold justify-center flex border border-dark-500 rounded-lg size-10 sm:size-16 gap-4 !important;
   }
 
   .shad-alert-dialog {
