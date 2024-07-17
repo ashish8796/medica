@@ -21,17 +21,13 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-const OnboardingForm = () => {
+const PatientForm = ({ testUser = null }: { testUser: TestUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    },
+    defaultValues: testUser || { name: "", email: "", phone: "" },
   });
 
   async function onSubmit({
@@ -45,7 +41,10 @@ const OnboardingForm = () => {
       const userData = { name, email, phone };
       const user = await createUser(userData);
 
-      if (user) router.push(`/patients/${user.$id}/register`);
+      if (user)
+        router.push(
+          `/patients/${user.$id}/register${testUser ? "?test=true" : ""}`
+        );
     } catch (error) {
       console.log(error);
     }
@@ -95,4 +94,4 @@ const OnboardingForm = () => {
   );
 };
 
-export default OnboardingForm;
+export default PatientForm;

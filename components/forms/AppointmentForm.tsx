@@ -25,7 +25,9 @@ const AppointmentForm = ({
   type,
   appointment,
   setOpen,
+  isTestUser = false,
 }: {
+  isTestUser: boolean;
   userId: string;
   patientId: string;
   type: "create" | "cancel" | "schedule";
@@ -39,15 +41,24 @@ const AppointmentForm = ({
 
   const form = useForm<z.infer<typeof AppointmentFormValidation>>({
     resolver: zodResolver(AppointmentFormValidation),
-    defaultValues: {
-      primaryPhysician: appointment ? appointment.primaryPhysician : "",
-      schedule: appointment
-        ? new Date(appointment.schedule)
-        : new Date(Date.now()),
-      reason: appointment ? appointment.reason : "",
-      note: appointment?.note || "",
-      cancellationReason: appointment?.cancellationReason || "",
-    },
+    defaultValues:
+      type === "create" && isTestUser
+        ? {
+            primaryPhysician: "",
+            schedule: new Date(Date.now()),
+            reason: "Reason",
+            note: "Note",
+            cancellationReason: "",
+          }
+        : {
+            primaryPhysician: appointment ? appointment.primaryPhysician : "",
+            schedule: appointment
+              ? new Date(appointment.schedule)
+              : new Date(Date.now()),
+            reason: appointment ? appointment.reason : "",
+            note: appointment?.note || "",
+            cancellationReason: appointment?.cancellationReason || "",
+          },
   });
 
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
@@ -85,7 +96,9 @@ const AppointmentForm = ({
         if (appointment) {
           form.reset();
           router.push(
-            `/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`
+            `/patients/${userId}/new-appointment/success?appointmentId=${
+              appointment.$id
+            }${isTestUser ? "&test=true" : ""}`
           );
         }
       } else {

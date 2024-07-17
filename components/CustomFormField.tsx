@@ -44,7 +44,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     dateFormat,
     renderSkeleton,
   } = props;
-
+  
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (

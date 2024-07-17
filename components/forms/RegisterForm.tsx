@@ -22,19 +22,29 @@ import { Label } from "../ui/label";
 import Image from "next/image";
 import FileUpload from "../FileUpload";
 import { SelectItem } from "../ui/select";
+import { Patient } from "@/types/appwrite";
+import { getPatientDefaultValues } from "@/lib/helper";
 
-const RegisterForm = ({ user }: { user: User }) => {
+const RegisterForm = ({
+  user,
+  testPatient = null,
+}: {
+  user: User;
+  testPatient: Patient | null;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
-    defaultValues: {
-      ...PatientFormDefaultValues,
-      name: user?.name,
-      email: user?.email,
-      phone: user?.phone,
-    },
+    defaultValues: testPatient
+      ? { ...getPatientDefaultValues(testPatient), identificationDocument: [] }
+      : {
+          ...PatientFormDefaultValues,
+          name: user?.name,
+          email: user?.email,
+          phone: user?.phone,
+        },
   });
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
@@ -79,11 +89,16 @@ const RegisterForm = ({ user }: { user: User }) => {
           ? formData
           : undefined,
         privacyConsent: values.privacyConsent,
+        isTestUser: testPatient ? true : false,
       };
 
       const newPatient = await registerPatient(patient);
       if (newPatient) {
-        router.push(`/patients/${user.$id}/new-appointment`);
+        router.push(
+          `/patients/${user.$id}/new-appointment${
+            testPatient ? "?test=true" : ""
+          }`
+        );
       }
     } catch (error) {
       console.log(error);

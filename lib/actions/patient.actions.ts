@@ -75,6 +75,7 @@ export const getPatient = async (userId: string): Promise<Patient | null> => {
 // REGISTER PATIENT
 export const registerPatient = async ({
   identificationDocument,
+  isTestUser,
   ...patient
 }: RegisterUserParams) => {
   try {
@@ -102,21 +103,25 @@ export const registerPatient = async ({
       }
     }
 
-    // Create new patient document
-    const newPatient = await databases.createDocument(
-      DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
-      ID.unique(),
-      {
-        identificationDocumentId: file?.$id || null,
-        identificationDocumentUrl: file?.$id
-          ? `${ENDPOINT}/storage/bucket/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`
-          : null,
-        ...patient,
-      }
-    );
+    if (isTestUser) {
+      return parseStringify(await getPatient(patient?.userId));
+    } else {
+      // Create new patient document
+      const newPatient = await databases.createDocument(
+        DATABASE_ID!,
+        PATIENT_COLLECTION_ID!,
+        ID.unique(),
+        {
+          identificationDocumentId: file?.$id || null,
+          identificationDocumentUrl: file?.$id
+            ? `${ENDPOINT}/storage/bucket/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`
+            : null,
+          ...patient,
+        }
+      );
 
-    return parseStringify(newPatient);
+      return parseStringify(newPatient);
+    }
   } catch (error) {
     console.error("An error occurred while creating a new patient:", error);
   }
