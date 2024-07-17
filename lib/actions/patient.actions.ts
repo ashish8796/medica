@@ -26,7 +26,6 @@ export const createUser = async (user: CreateUserParams) => {
       user.name
     );
 
-    console.log("New user: ", newUser);
     return parseStringify(newUser);
   } catch (error: any) {
     if (error && error?.code === 409) {
@@ -36,7 +35,6 @@ export const createUser = async (user: CreateUserParams) => {
     }
 
     console.log("Error creating user: ", error);
-    return parseStringify(error);
   }
 };
 
