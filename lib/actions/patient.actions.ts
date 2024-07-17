@@ -34,6 +34,7 @@ export const createUser = async (user: CreateUserParams) => {
     }
 
     console.log("Error creating user: ", error);
+    return parseStringify(error);
   }
 };
 
