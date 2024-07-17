@@ -43,12 +43,17 @@ const OnboardingForm = () => {
 
     try {
       const userData = { name, email, phone };
+      console.log("User Data===>", userData);
       const user = await createUser(userData);
-      
+
+      console.log("New user: ", user);
+
       if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error) {
       console.log(error);
     }
+
+    setIsLoading(false);
   }
 
   return (
