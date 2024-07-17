@@ -158,6 +158,9 @@ export const sendSMSNotification = async (userId: string, content: string) => {
 
     return parseStringify(message);
   } catch (error) {
-    console.log(error);
+    console.error(
+      "An error occurred while sending the SMS notification:",
+      error
+    );
   }
 };
