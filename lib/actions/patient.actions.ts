@@ -17,7 +17,6 @@ import { parseStringify } from "../utils";
 import { Patient } from "@/types/appwrite";
 
 export const createUser = async (user: CreateUserParams) => {
-  console.log("I AM HERE", user);
   try {
     const newUser = await users.create(
       ID.unique(),
@@ -27,15 +26,19 @@ export const createUser = async (user: CreateUserParams) => {
       user.name
     );
 
-    console.log("New User in server action", newUser);
-
     return parseStringify(newUser);
   } catch (error: any) {
-    console.log("Error creating user: ", error);
-    if (error && error?.code === 409) {
-      const documents = await users.list([Query.equal("email", [user.email])]);
+    console.log("Error creating user: ", error?.response);
 
-      return documents?.users[0];
+    const phoneQuery = Query.equal("phone", [user.phone]);
+    const emailQuery = Query.equal("email", [user.email]);
+
+    // Combine the queries with a logical OR
+    const combinedQuery = Query.or([phoneQuery, emailQuery]);
+    if (error && error?.code === 409) {
+      const documents = await users.list([combinedQuery]);
+
+      return parseStringify(documents.users[0]);
     }
   }
 };
