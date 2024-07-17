@@ -17,6 +17,7 @@ import { parseStringify } from "../utils";
 import { Patient } from "@/types/appwrite";
 
 export const createUser = async (user: CreateUserParams) => {
+  console.log("I AM HERE", user);
   try {
     const newUser = await users.create(
       ID.unique(),
@@ -25,6 +26,8 @@ export const createUser = async (user: CreateUserParams) => {
       undefined,
       user.name
     );
+
+    console.log("New User in server action", newUser);
 
     return parseStringify(newUser);
   } catch (error: any) {
