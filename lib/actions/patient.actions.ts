@@ -32,6 +32,8 @@ export const createUser = async (user: CreateUserParams) => {
 
       return documents?.users[0];
     }
+
+    console.log("Error creating user: ", error);
   }
 };
 
