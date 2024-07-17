@@ -18,6 +18,8 @@ const PatientPage = async ({ searchParams }: SearchParamProps) => {
     testUser = await getUser(testUserId);
   }
 
+  console.log("testUser", testUser);
+
   return (
     <div className="flex h-screen max-h-screen">
       {isAdmin && <PaaskeyModal />}

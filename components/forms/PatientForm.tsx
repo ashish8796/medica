@@ -7,9 +7,10 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
+import { getPatientFormDefaultValues } from "@/lib/helper";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -25,9 +26,13 @@ const PatientForm = ({ testUser = null }: { testUser: TestUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  console.log("IM in Patient form");
+
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
-    defaultValues: testUser || { name: "", email: "", phone: "" },
+    defaultValues: testUser
+      ? getPatientFormDefaultValues(testUser)
+      : { name: "", email: "", phone: "" },
   });
 
   async function onSubmit({

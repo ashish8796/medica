@@ -49,3 +49,8 @@ export const getPatientDefaultValues = (patient: Patient) => {
     privacyConsent,
   };
 };
+
+export const getPatientFormDefaultValues = (testUser: TestUser) => {
+  console.log("Sending patient form default values");
+  return { ...testUser };
+};
