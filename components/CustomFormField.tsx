@@ -11,6 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { E164Number } from "libphonenumber-js/core";
@@ -44,7 +45,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     dateFormat,
     renderSkeleton,
   } = props;
-  
+
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -175,6 +176,7 @@ const CustomFormField = (props: CustomProps) => {
           )}
 
           <RenderField field={field} props={props} />
+          <FormMessage className="shad-error" />
         </FormItem>
       )}
     />

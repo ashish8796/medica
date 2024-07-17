@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
 import { getPatientFormDefaultValues } from "@/lib/helper";
@@ -52,6 +52,8 @@ const PatientForm = ({ testUser = null }: { testUser: TestUser }) => {
 
     setIsLoading(false);
   }
+
+  // console.log("Validation Errors ", form.formState.errors);
 
   useEffect(() => {
     if (testUser) {
