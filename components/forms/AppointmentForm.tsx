@@ -27,7 +27,7 @@ const AppointmentForm = ({
   setOpen,
   isTestUser = false,
 }: {
-  isTestUser: boolean;
+  isTestUser?: boolean;
   userId: string;
   patientId: string;
   type: "create" | "cancel" | "schedule";
