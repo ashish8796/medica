@@ -51,6 +51,9 @@ export const getPatientDefaultValues = (patient: Patient) => {
 };
 
 export const getPatientFormDefaultValues = (testUser: TestUser) => {
-  console.log("Sending patient form default values");
-  return { ...testUser };
+  return {
+    name: testUser?.name,
+    email: testUser?.email,
+    phone: testUser?.phone,
+  };
 };

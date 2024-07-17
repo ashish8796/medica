@@ -26,13 +26,9 @@ const PatientForm = ({ testUser = null }: { testUser: TestUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  console.log("IM in Patient form");
-
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
-    defaultValues: testUser
-      ? getPatientFormDefaultValues(testUser)
-      : { name: "", email: "", phone: "" },
+    defaultValues: { name: "", email: "", phone: "" },
   });
 
   async function onSubmit({
@@ -56,6 +52,12 @@ const PatientForm = ({ testUser = null }: { testUser: TestUser }) => {
 
     setIsLoading(false);
   }
+
+  useEffect(() => {
+    if (testUser) {
+      form.reset(getPatientFormDefaultValues(testUser));
+    }
+  }, [form, testUser]);
 
   return (
     <Form {...form}>

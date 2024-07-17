@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "@/components/Logo";
 import PatientForm from "@/components/forms/PatientForm";
@@ -7,18 +9,21 @@ import Copyright from "@/components/copyright/Copyright";
 import Link from "next/link";
 import { getUser } from "@/lib/actions/patient.actions";
 
-const PatientPage = async ({ searchParams }: SearchParamProps) => {
+const PatientPage = ({ searchParams }: SearchParamProps) => {
+  const [testUser, setTestUser] = useState<TestUser>(null);
   const isAdmin = searchParams?.admin || false;
   const isTestUser = searchParams?.test === "true" || false;
   const testUserId = "669684290016ddb49cac";
 
-  let testUser;
+  useEffect(() => {
+    if (isTestUser) {
+      (async () => {
+        const user = await getUser(testUserId);
 
-  if (isTestUser) {
-    testUser = await getUser(testUserId);
-  }
-
-  console.log("testUser", testUser);
+        setTestUser(user);
+      })();
+    }
+  }, [isTestUser]);
 
   return (
     <div className="flex h-screen max-h-screen">
