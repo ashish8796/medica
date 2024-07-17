@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Our app provides a seamless solution for booking doctor appointments and managing them efficiently. Patients can easily schedule appointments with their preferred doctors through a user-friendly interface. Additionally, the app features a comprehensive appointment management dashboard for doctors and administrators, equipped with all the necessary functionalities to handle appointments effectively. This ensures a smooth and organized experience for both patients and healthcare providers.
+Medica provides a seamless solution for booking doctor appointments and managing them efficiently. Patients can easily schedule appointments with their preferred doctors through a user-friendly interface. Additionally, the app features a comprehensive appointment management dashboard for doctors and administrators, equipped with all the necessary functionalities to handle appointments effectively. This ensures a smooth and organized experience for both patients and healthcare providers.
 
 ## Functionalities
 
@@ -38,3 +38,6 @@ This app uses Sentry for monitoring and error tracking. Sentry integration ensur
 - **Phone Number Verification using OTP**: This feature will allow users to verify their phone numbers using OTP. Currently, it only works with phone numbers added in Twilio.
 
 For any further questions or issues, feel free to reach out.
+## Contact
+- 📧 Email: [ashishsaini.ak@gmail.com](mailto:ashishsaini.ak@gmail.com)
+- 🌐 Portfolio: [https://ashishkumarsaini.com](https://ashishkumarsaini.com)
