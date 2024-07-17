@@ -28,7 +28,7 @@ export const columns: ColumnDef<Appointment>[] = [
     accessorKey: "patient",
     header: "Patient",
     cell: ({ row }) => (
-      <p className="text-14-medium">{row.original?.patient.name}</p>
+      <p className="text-14-medium">{row.original?.patient?.name}</p>
     ),
   },
   {
@@ -36,7 +36,7 @@ export const columns: ColumnDef<Appointment>[] = [
     header: "Status",
     cell: ({ row }) => (
       <div className="text-14-medium">
-        <StatusBadge status={row.original.status} />
+        <StatusBadge status={row?.original?.status} />
       </div>
     ),
   },
@@ -45,7 +45,7 @@ export const columns: ColumnDef<Appointment>[] = [
     header: "Appointment",
     cell: ({ row }) => (
       <p className="text-14-regular min-w-[100px]">
-        {formatDateTime(row.original.schedule).dateTime}
+        {formatDateTime(row?.original?.schedule)?.dateTime}
       </p>
     ),
   },
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Appointment>[] = [
     header: "Doctor",
     cell: ({ row }) => {
       const doctor = Doctors.find(
-        (doc) => doc.name === row.original.primaryPhysician
+        (doc) => doc.name === row?.original?.primaryPhysician
       );
       return (
         <div className="flex items-center gap-3">
@@ -78,7 +78,7 @@ export const columns: ColumnDef<Appointment>[] = [
       return (
         <div className="flex gap-1">
           <AppointmentModal
-            patientId={data.patient.$id}
+            patientId={data?.patient?.$id}
             userId={data.userId}
             appointment={data}
             // tittle="Schedule Appointment"
@@ -86,8 +86,8 @@ export const columns: ColumnDef<Appointment>[] = [
             // description="Please confirm the following details to scheduled"
           />
           <AppointmentModal
-            patientId={data.patient.$id}
-            userId={data.userId}
+            patientId={data?.patient?.$id}
+            userId={data?.userId}
             appointment={data}
             // tittle="Schedule Appointment"
             // description="Are you sure you want to cancel this appointment?"

@@ -15,6 +15,7 @@ const SuccessAppointment = async ({
 }: SearchParamProps) => {
   const appointmentId = (searchParams?.appointmentId as string) || "";
   const appointment = await getAppointment(appointmentId);
+  const isTestUser = searchParams?.test === "true" || false;
   const user = await getUser(userId);
 
   const doctor = Doctors.find(
@@ -78,7 +79,11 @@ const SuccessAppointment = async ({
             className="shad-primary-btn mt-12 w-fit mx-auto"
             asChild
           >
-            <Link href={`/patients/${userId}/new-appointment`}>
+            <Link
+              href={`/patients/${userId}/new-appointment${
+                isTestUser ? "?test=true" : ""
+              }`}
+            >
               New Appointment
             </Link>
           </Button>

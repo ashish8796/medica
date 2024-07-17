@@ -5,8 +5,12 @@ import Image from "next/image";
 import React from "react";
 import * as Sentry from "@sentry/nextjs";
 
-const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
+const NewAppointment = async ({
+  params: { userId },
+  searchParams,
+}: SearchParamProps) => {
   const patient = await getPatient(userId);
+  const isTestUser = searchParams?.test === "true" || false;
 
   Sentry.metrics.set("patient_view_new_appointment", patient?.name as string);
 
@@ -20,6 +24,7 @@ const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
             type="create"
             userId={userId}
             patientId={patient?.$id as string}
+            isTestUser={isTestUser}
           />
         </div>
       </section>

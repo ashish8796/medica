@@ -1,12 +1,23 @@
 import Logo from "@/components/Logo";
 import RegisterForm from "@/components/forms/RegisterForm";
-import { getUser } from "@/lib/actions/patient.actions";
+import { getPatient, getUser } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 import React from "react";
 import * as Sentry from "@sentry/nextjs";
+import { Patient } from "@/types/appwrite";
 
-const Register = async ({ params: { userId } }: SearchParamProps) => {
+const Register = async ({
+  params: { userId },
+  searchParams,
+}: SearchParamProps) => {
   const user = await getUser(userId);
+  const isTestUser = searchParams?.test === "true" || false;
+  const testUserId = "669684290016ddb49cac";
+  let testPatient;
+
+  if (isTestUser) {
+    testPatient = await getPatient(testUserId);
+  }
 
   Sentry.metrics.set("user_view_register", user.name);
 
@@ -15,7 +26,10 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
           <Logo w="w-[32px]" h="h-[32px]" />
-          <RegisterForm user={user} />
+          <RegisterForm
+            user={user}
+            testPatient={isTestUser ? (testPatient as Patient) : null}
+          />
         </div>
       </section>
 

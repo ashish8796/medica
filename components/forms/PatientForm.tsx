@@ -7,9 +7,10 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createUser } from "@/lib/actions/patient.actions";
 import { useRouter } from "next/navigation";
+import { getPatientFormDefaultValues } from "@/lib/helper";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -21,17 +22,13 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-const OnboardingForm = () => {
+const PatientForm = ({ testUser = null }: { testUser: TestUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    },
+    defaultValues: { name: "", email: "", phone: "" },
   });
 
   async function onSubmit({
@@ -45,13 +42,24 @@ const OnboardingForm = () => {
       const userData = { name, email, phone };
       const user = await createUser(userData);
 
-      if (user) router.push(`/patients/${user.$id}/register`);
+      if (user)
+        router.push(
+          `/patients/${user.$id}/register${testUser ? "?test=true" : ""}`
+        );
     } catch (error) {
       console.log(error);
     }
 
     setIsLoading(false);
   }
+
+  // console.log("Validation Errors ", form.formState.errors);
+
+  useEffect(() => {
+    if (testUser) {
+      form.reset(getPatientFormDefaultValues(testUser));
+    }
+  }, [form, testUser]);
 
   return (
     <Form {...form}>
@@ -95,4 +103,4 @@ const OnboardingForm = () => {
   );
 };
 
-export default OnboardingForm;
+export default PatientForm;

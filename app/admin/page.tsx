@@ -51,7 +51,9 @@ const Admin = async () => {
             />
           </section>
 
-          <DataTable columns={columns} data={appointments.documents} />
+          {appointments?.documents?.length > 0 && (
+            <DataTable columns={columns} data={appointments.documents} />
+          )}
         </main>
       )}
     </div>

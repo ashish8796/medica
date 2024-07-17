@@ -36,6 +36,7 @@ declare interface RegisterUserParams extends CreateUserParams {
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
   privacyConsent: boolean;
+  isTestUser: boolean;
 }
 
 declare type CreateAppointmentParams = {
@@ -54,3 +55,9 @@ declare type UpdateAppointmentParams = {
   appointment: Appointment;
   type: string;
 };
+
+declare type TestUser = {
+  name: string;
+  email: string;
+  phone: string;
+} | null;
