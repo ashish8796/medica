@@ -1,5 +1,15 @@
 # Medica
 
+### Home Page
+![Home Page](public/assets/images/home.png)
+
+### New Appointment
+![New Appointment](public/assets/images/new-appointment.png)
+
+### Admin Dashboard
+![Admin Dashboard](public/assets/images/admin-dashboard.png)
+
+
 ## Introduction
 
 Medica provides a seamless solution for booking doctor appointments and managing them efficiently. Patients can easily schedule appointments with their preferred doctors through a user-friendly interface. Additionally, the app features a comprehensive appointment management dashboard for doctors and administrators, equipped with all the necessary functionalities to handle appointments effectively. This ensures a smooth and organized experience for both patients and healthcare providers.
@@ -27,7 +37,7 @@ The app is built using the following technologies:
 
 ## Screenshots and Demonstration
 
-Check out our [screenshot](#) and [video demonstration](#) of the platform.
+Check out [video demonstration](#) of the platform.
 
 ## Monitoring
 
