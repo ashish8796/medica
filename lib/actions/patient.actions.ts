@@ -15,6 +15,7 @@ import {
 import { parseStringify } from "../utils";
 
 import { Patient } from "@/types/appwrite";
+import { cookies } from "next/headers";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -53,12 +54,18 @@ export const getUser = async (userId: string) => {
 };
 
 export const getPatient = async (userId: string): Promise<Patient | null> => {
+  console.log("I m getting patient.");
   try {
+    // disable cache for this server action
+    const _cookies = cookies();
+
     const patientDocuments = await databases.listDocuments(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
       [Query.equal("userId", [userId])]
     );
+
+    console.log("Patient Documents: ", patientDocuments);
 
     return patientDocuments.documents.length > 0
       ? parseStringify(patientDocuments.documents[0])

@@ -23,6 +23,8 @@ const Register = async ({
 
   Sentry.metrics.set("user_view_register", user.name);
 
+  console.log("Test Patient", testPatient);
+
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
