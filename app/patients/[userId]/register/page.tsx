@@ -6,8 +6,6 @@ import React from "react";
 import * as Sentry from "@sentry/nextjs";
 import { Patient } from "@/types/appwrite";
 
-export const dynamic = "force-dynamic";
-
 const Register = async ({
   params: { userId },
   searchParams,
@@ -23,7 +21,7 @@ const Register = async ({
 
   Sentry.metrics.set("user_view_register", user.name);
 
-  console.log("Test Patient", testPatient);
+  // console.log("Test Patient", testPatient);
 
   return (
     <div className="flex h-screen max-h-screen">
