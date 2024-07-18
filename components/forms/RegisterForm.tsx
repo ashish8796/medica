@@ -135,8 +135,8 @@ const RegisterForm = ({
           iconAlt="user"
         />
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -148,7 +148,7 @@ const RegisterForm = ({
             />
           </div>
 
-          <div className="xl:flex-1">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.PHONE_INPUT}
@@ -160,14 +160,16 @@ const RegisterForm = ({
         </div>
 
         <div className="flex flex-col gap-6 xl:flex-row">
-          <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.DATE_PICKER}
-            name="birthDate"
-            label="Date of Birth"
-          />
+          <div className="flex-1">
+            <CustomFormField
+              control={form.control}
+              fieldType={FormFieldType.DATE_PICKER}
+              name="birthDate"
+              label="Date of Birth"
+            />
+          </div>
 
-          <div className="xl:flex-1">
+          <div className="flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.SKELETON}
@@ -176,7 +178,7 @@ const RegisterForm = ({
               renderSkeleton={(field) => (
                 <FormControl>
                   <RadioGroup
-                    className="flex h-11 gap-6 xl:justify-between"
+                    className="flex h-11 gap-6 lg:justify-between"
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
@@ -195,8 +197,8 @@ const RegisterForm = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -205,7 +207,7 @@ const RegisterForm = ({
               placeholder="123 Main St"
             />
           </div>
-          <div className="xl:flex-1">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -216,8 +218,8 @@ const RegisterForm = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -226,7 +228,7 @@ const RegisterForm = ({
               placeholder="Guardian's name"
             />
           </div>
-          <div className="xl:flex-1">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.PHONE_INPUT}
@@ -269,8 +271,8 @@ const RegisterForm = ({
           })}
         </CustomFormField>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -280,7 +282,7 @@ const RegisterForm = ({
             />
           </div>
 
-          <div className="xl:flex-1">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
@@ -291,8 +293,8 @@ const RegisterForm = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.TEXTAREA}
@@ -301,7 +303,7 @@ const RegisterForm = ({
               placeholder="Peanuts, Penicillin, Pollen"
             />
           </div>
-          <div className="xl:flex-1">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.TEXTAREA}
@@ -312,8 +314,8 @@ const RegisterForm = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
+        <div className="flex flex-col gap-6 lg:flex-row">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.TEXTAREA}
@@ -323,7 +325,7 @@ const RegisterForm = ({
             />
           </div>
 
-          <div className="xl:flex-1">
+          <div className="lg:flex-1">
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.TEXTAREA}
@@ -340,32 +342,28 @@ const RegisterForm = ({
           </div>
         </section>
 
-        <div className="flex flex-col gap-6 xl:flex-row">
-          <div className="xl:flex-1">
-            <CustomFormField
-              control={form.control}
-              fieldType={FormFieldType.SELECT}
-              name="identificationType"
-              label="Identification Type"
-              placeholder="Select identification type"
-            >
-              {IdentificationTypes.map((type) => (
-                <SelectItem key={type} value={type}>
-                  {type}
-                </SelectItem>
-              ))}
-            </CustomFormField>
-          </div>
+        <div className="flex flex-col gap-6">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.SELECT}
+            name="identificationType"
+            label="Identification Type"
+            placeholder="Select identification type"
+          >
+            {IdentificationTypes.map((type) => (
+              <SelectItem key={type} value={type}>
+                {type}
+              </SelectItem>
+            ))}
+          </CustomFormField>
 
-          <div className="xl:flex-1">
-            <CustomFormField
-              control={form.control}
-              fieldType={FormFieldType.INPUT}
-              name="identificationNumber"
-              label="Identification Number"
-              placeholder="123456789"
-            />
-          </div>
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="identificationNumber"
+            label="Identification Number"
+            placeholder="123456789"
+          />
         </div>
 
         <CustomFormField

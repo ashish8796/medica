@@ -5,8 +5,7 @@ import Image from "next/image";
 import React from "react";
 import * as Sentry from "@sentry/nextjs";
 import { Patient } from "@/types/appwrite";
-
-export const dynamic = "force-dynamic";
+import Link from "next/link";
 
 const Register = async ({
   params: { userId },
@@ -23,11 +22,15 @@ const Register = async ({
 
   Sentry.metrics.set("user_view_register", user.name);
 
+  // console.log("Test Patient", testPatient);
+
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
-          <Logo w="w-[32px]" h="h-[32px]" />
+        <div className="sub-container max-w-[860px]">
+          <Link href="/patients">
+            <Logo w="w-[32px]" h="h-[32px]" />
+          </Link>
           <RegisterForm
             user={user}
             testPatient={isTestUser ? (testPatient as Patient) : null}
