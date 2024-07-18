@@ -6,6 +6,8 @@ import React from "react";
 import * as Sentry from "@sentry/nextjs";
 import { Patient } from "@/types/appwrite";
 
+export const dynamic = "force-dynamic";
+
 const Register = async ({
   params: { userId },
   searchParams,
