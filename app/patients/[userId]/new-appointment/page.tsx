@@ -4,6 +4,7 @@ import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
 import React from "react";
 import * as Sentry from "@sentry/nextjs";
+import Link from "next/link";
 
 const NewAppointment = async ({
   params: { userId },
@@ -18,7 +19,9 @@ const NewAppointment = async ({
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">
         <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
-          <Logo w="w-[32px]" h="h-[32px]" />
+          <Link href={"/patients"}>
+            <Logo w="w-[32px]" h="h-[32px]" />
+          </Link>
 
           <AppointmentForm
             type="create"

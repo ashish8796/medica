@@ -183,7 +183,7 @@
 
   /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
-    @apply bg-green-500 w-fit sm:w-full mx-auto text-white !important;
+    @apply bg-green-500 w-full mx-auto text-white !important;
   }
 
   .shad-danger-btn {
@@ -259,7 +259,7 @@
   }
 
   .shad-alert-dialog {
-    @apply space-y-5 bg-dark-400 border-dark-500 outline-none !important;
+    @apply space-y-3 sm:space-y-5 rounded-lg bg-dark-400 border-dark-500 outline-none w-[95%] sm:w-full !important;
   }
 
   .shad-sheet-content button {
