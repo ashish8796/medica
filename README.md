@@ -34,7 +34,7 @@ The app is built using the following technologies:
 - React
 - Tailwind CSS
 - TypeScript
-
+<!--
 ## Screenshots and Demonstration
 
 Check out [video demonstration](#) of the platform.
@@ -42,7 +42,7 @@ Check out [video demonstration](#) of the platform.
 ## Monitoring
 
 This app uses Sentry for monitoring and error tracking. Sentry integration ensures that we can catch and fix errors quickly, providing a better user experience.
-
+-->
 ## Coming Soon
 
 - **Phone Number Verification using OTP**: This feature will allow users to verify their phone numbers using OTP. Currently, it only works with phone numbers added in Twilio.
